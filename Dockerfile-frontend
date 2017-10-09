@@ -1,0 +1,3 @@
+FROM java:8
+COPY ./frontend/target/juliano.pagetrack.frontend-0.0.1.jar .
+CMD java -jar juliano.pagetrack.frontend-0.0.1.jar

@@ -1,0 +1,3 @@
+FROM java:8
+COPY ./pageaccess/target/juliano.pagetrack.pageaccess-0.0.1.jar .
+CMD java -jar juliano.pagetrack.pageaccess-0.0.1.jar

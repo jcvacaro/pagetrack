@@ -1,0 +1,32 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq
+  contactservice:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-contact
+    depends_on:
+      - rabbitmq
+  pageaccessservice:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-pageaccess
+    depends_on:
+      - rabbitmq
+  apigwservice:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-apigw
+    depends_on:
+      - contactservice
+      - pageaccessservice
+      - rabbitmq
+  frontendservice:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-frontend
+    depends_on:
+      - apigwservice
+    ports:
+      - "8080:8080"

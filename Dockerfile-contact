@@ -1,0 +1,3 @@
+FROM java:8
+COPY ./contact/target/juliano.pagetrack.contact-0.0.1.jar .
+CMD java -jar juliano.pagetrack.contact-0.0.1.jar
