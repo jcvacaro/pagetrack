@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,36 +34,45 @@ public class FrontendRESTController {
 	private FrontendRESTService rest;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact")
-	public List<Contact> findContacts() {
+	public @ResponseBody List<Contact> findContacts() {
 		logger.info("findContacts invoked");
 		return this.rest.findContacts();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact/{userid}/pageaccess")
-	public List<PageAccess> findPageAccessByUserId(@PathVariable("userid") String userId) {
+	public @ResponseBody List<PageAccess> findPageAccessByUserId(@PathVariable("userid") String userId) {
 		logger.info("findPageAccessByUserId invoked: userId=" + userId);
 		return this.rest.findPageAccessByUserId(userId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/contact")
-	public ResponseEntity<Contact> createContact(Contact contact) {
+	@ResponseStatus(value = HttpStatus.OK)
+	public void createContact(@RequestBody Contact contact, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("createContact invoked: userId=" + contact.getUserId());
+		Cookie c = helper.getCookie(request);
+		if (c == null) {
+			c = helper.createCookie();
+			response.addCookie(c);
+			logger.info("createContact: new user detected: " + c.getValue());
+		}
+		logger.info("createContact: cookie=" + c.getValue());
+		contact.setUserId(c.getValue());
 		this.rest.createContact(contact);
-		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/pageaccess")
-	public ResponseEntity<PageAccess> trackPageAccess(@RequestBody PageAccess pageAccess, HttpServletRequest request, HttpServletResponse response) {
+	@ResponseStatus(value = HttpStatus.OK)
+	public void trackPageAccess(@RequestBody PageAccess pageAccess, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("trackPageAccess invoked: userId=" + pageAccess.getUserId());
 		Cookie c = helper.getCookie(request);
 		if (c == null) {
 			c = helper.createCookie();
 			response.addCookie(c);
-			logger.info("new user detected: " + c.toString());
+			logger.info("trackPageAccess: new user detected: " + c.getValue());
 		}
-		pageAccess.setUserId(c.toString());
+		logger.info("trackPageAccess: cookie=" + c.getValue());
+		pageAccess.setUserId(c.getValue());
 		this.rest.trackPageAccess(pageAccess);
-		return new ResponseEntity<PageAccess>(pageAccess, HttpStatus.OK);
     }
 
 }
