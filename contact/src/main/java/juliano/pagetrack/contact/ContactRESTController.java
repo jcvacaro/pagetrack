@@ -1,6 +1,6 @@
 package juliano.pagetrack.contact;
 
-import juliano.pagetrack.contact.domain.Contact;
+import juliano.pagetrack.common.domain.Contact;
 import juliano.pagetrack.contact.service.ContactRepository;
 
 import java.util.List;

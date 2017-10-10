@@ -1,6 +1,6 @@
 package juliano.pagetrack.contact.service;
 
-import juliano.pagetrack.contact.domain.Contact;
+import juliano.pagetrack.common.domain.Contact;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

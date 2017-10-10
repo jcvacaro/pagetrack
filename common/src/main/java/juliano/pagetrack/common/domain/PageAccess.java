@@ -1,4 +1,4 @@
-package juliano.pagetrack.pageaccess.domain;
+package juliano.pagetrack.common.domain;
 
 import java.io.Serializable;
 import javax.persistence.Temporal;
@@ -44,7 +44,7 @@ public class PageAccess implements Serializable {
 		return this.userId;
 	}
 
-	public String getURL() {
+	public String getUrl() {
 		return this.url;
 	}
 
@@ -56,7 +56,7 @@ public class PageAccess implements Serializable {
 		this.userId = userId;
 	}
 
-	public void setURL(String url) {
+	public void setUrl(String url) {
 		this.url = url;
 	}
 

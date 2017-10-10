@@ -1,7 +1,7 @@
 package juliano.pagetrack.frontend;
 
-import juliano.pagetrack.frontend.domain.Contact;
-import juliano.pagetrack.frontend.domain.PageAccess;
+import juliano.pagetrack.common.domain.Contact;
+import juliano.pagetrack.common.domain.PageAccess;
 import juliano.pagetrack.frontend.service.FrontendRESTService;
 import juliano.pagetrack.frontend.util.CookieHelper;
 

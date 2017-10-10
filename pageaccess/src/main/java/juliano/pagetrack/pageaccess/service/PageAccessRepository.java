@@ -1,6 +1,6 @@
 package juliano.pagetrack.pageaccess.service;
 
-import juliano.pagetrack.pageaccess.domain.PageAccess;
+import juliano.pagetrack.common.domain.PageAccess;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

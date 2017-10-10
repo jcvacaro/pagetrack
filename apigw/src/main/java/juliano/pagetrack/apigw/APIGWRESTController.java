@@ -1,7 +1,7 @@
 package juliano.pagetrack.apigw;
 
-import juliano.pagetrack.apigw.domain.Contact;
-import juliano.pagetrack.apigw.domain.PageAccess;
+import juliano.pagetrack.common.domain.Contact;
+import juliano.pagetrack.common.domain.PageAccess;
 import juliano.pagetrack.apigw.service.APIGWQueueService;
 import juliano.pagetrack.apigw.service.APIGWRESTService;
 

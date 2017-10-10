@@ -1,7 +1,7 @@
 package juliano.pagetrack.apigw.service;
 
-import juliano.pagetrack.apigw.domain.Contact;
-import juliano.pagetrack.apigw.domain.PageAccess;
+import juliano.pagetrack.common.domain.Contact;
+import juliano.pagetrack.common.domain.PageAccess;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

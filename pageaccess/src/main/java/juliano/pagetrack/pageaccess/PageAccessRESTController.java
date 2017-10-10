@@ -1,6 +1,6 @@
 package juliano.pagetrack.pageaccess;
 
-import juliano.pagetrack.pageaccess.domain.PageAccess;
+import juliano.pagetrack.common.domain.PageAccess;
 import juliano.pagetrack.pageaccess.service.PageAccessRepository;
 
 import java.util.List;

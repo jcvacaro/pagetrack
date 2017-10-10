@@ -1,4 +1,4 @@
-package juliano.pagetrack.apigw.domain;
+package juliano.pagetrack.common.domain;
 
 import java.io.Serializable;
 
