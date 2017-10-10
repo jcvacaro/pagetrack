@@ -33,26 +33,31 @@ public class FrontendRESTController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact")
 	public List<Contact> findContacts() {
+		logger.info("findContacts invoked");
 		return this.rest.findContacts();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact/{userid}/pageaccess")
 	public List<PageAccess> findPageAccessByUserId(@PathVariable("userid") String userId) {
+		logger.info("findPageAccessByUserId invoked: userId=" + userId);
 		return this.rest.findPageAccessByUserId(userId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/contact")
-	public void createContact(Contact contact) {
+	public ResponseEntity<Contact> createContact(Contact contact) {
+		logger.info("createContact invoked: userId=" + contact.getUserId());
 		this.rest.createContact(contact);
+		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/pageaccess")
 	public ResponseEntity<PageAccess> trackPageAccess(@RequestBody PageAccess pageAccess, HttpServletRequest request, HttpServletResponse response) {
-		logger.info("trackPageAccess invoked");
+		logger.info("trackPageAccess invoked: userId=" + pageAccess.getUserId());
 		Cookie c = helper.getCookie(request);
 		if (c == null) {
 			c = helper.createCookie();
 			response.addCookie(c);
+			logger.info("new user detected: " + c.toString());
 		}
 		pageAccess.setUserId(c.toString());
 		this.rest.trackPageAccess(pageAccess);

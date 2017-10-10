@@ -10,21 +10,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/v1")
 public class PageAccessRESTController {
+
+	private static final Logger logger = LoggerFactory.getLogger(PageAccessRESTController.class);
 
 	@Autowired
 	private PageAccessRepository repository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/pageaccess")
 	public List<PageAccess> findAll() {
+		logger.info("findAll invoked");
 		return repository.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/pageaccess/{userid}")
 	public List<PageAccess> findByUserId(@PathVariable("userid") String userId) {
+		logger.info("findByUserId invoked: userId=" + userId);
 		return repository.findByUserId(userId);
 	}
 
