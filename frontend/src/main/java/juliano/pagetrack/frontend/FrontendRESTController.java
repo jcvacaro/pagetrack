@@ -34,9 +34,18 @@ public class FrontendRESTController {
 	private FrontendRESTService rest;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact")
-	public @ResponseBody List<Contact> findContacts() {
+	public @ResponseBody String findContacts() {
 		logger.info("findContacts invoked");
-		return this.rest.findContacts();
+		String text = "";
+		List<Contact> contacts = this.rest.findContacts();
+		if ((contacts != null) && (!contacts.isEmpty())) {
+			logger.info("findContacts: contacts=" + contacts.size());
+			for (Contact c : contacts) {
+				text += "<a href=\"/api/v1/contact/" + c.getUserId() + "/pageaccess\">" + c.getEmail() + "</a><br>";
+			}
+		}
+		logger.info("findContacts: text=" + text);
+		return text;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact/{userid}/pageaccess")
