@@ -1,4 +1,4 @@
-var SERVER_URL = "api/v1/pagetrac";
+var SERVER_URL = "api/v1/pagetrack";
 
 var start = function() {
 	var data = JSON.stringify({
