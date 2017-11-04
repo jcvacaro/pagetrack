@@ -19,42 +19,12 @@ w3.includeHTML();
 <br>
 
 <center>
-<div id="myreport">
-	<div id="myheader">
-		<table border=1 width=80%>
-			<tr>
-				<td>
-					contact
-				</td>
-				<td>
-					<table width=100%>
-						<tr>
-							<td>timestamp</td>
-							<td>url</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</div>
-
-	<div id="mytable">
-	</div>
-</div>
+<div id="mytable"></div>
 </center>
 
 <script>
-var div = document.getElementById("mytable");
-
-var table = document.createElement('TABLE');
-table.width='80%';
-table.border='1';
-
-var tbody = document.createElement('TBODY');
-table.appendChild(tbody);
-
-var contacts = $.ajax({type: "GET", url: "api/v1/pagetrack/contact", async: false}).responseJSON;
-contacts.forEach(function(contact){
+// add a new table row
+var addContact = function(contact, tbody){
 	var tr = document.createElement('TR');
 	tbody.appendChild(tr);
 
@@ -88,6 +58,32 @@ contacts.forEach(function(contact){
 		trPage.appendChild(tdPage);
 		tdPage.appendChild(document.createTextNode(page.url));
 	});
+};
+
+// get the HTML div to place the table into
+var div = document.getElementById("mytable");
+
+// create table
+var table = document.createElement('TABLE');
+table.width='80%';
+table.border='1';
+
+var tbody = document.createElement('TBODY');
+table.appendChild(tbody);
+
+// add header
+header = {
+	email:  "contact",
+	pages:[
+		{timestamp: "timestamp", url: "url"}
+	]
+};
+addContact(header, tbody);
+
+// add contacts
+var contacts = $.ajax({type: "GET", url: "api/v1/pagetrack/contact", async: false}).responseJSON;
+contacts.forEach(function(contact){
+	addContact(contact, tbody);
 });
 
 div.appendChild(table);
