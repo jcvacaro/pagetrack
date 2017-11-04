@@ -1,4 +1,4 @@
-var server = window.location.hostname + ":8080";
+var SERVER_URL = "api/v1/pagetrac";
 
 var start = function() {
 	var data = JSON.stringify({
@@ -9,7 +9,7 @@ var start = function() {
 		type: "POST",
 		dataType: "jsonp",
 		contentType: "application/json",
-		url: "http://" + server + "/api/v1/pageaccess",
+		url: SERVER_URL + "/pageaccess",
 		data: data
 	});
 };
@@ -22,7 +22,7 @@ function processForm() {
                 type: "POST",
                 dataType: "jsonp",
                 contentType: "application/json",
-                url: "http://" + server + "/api/v1/contact",
+                url: SERVER_URL + "/contact",
                 data: data
         });
 	alert("thank you for requesting our contact service");

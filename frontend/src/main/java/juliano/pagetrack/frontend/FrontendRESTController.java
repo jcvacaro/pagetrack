@@ -1,11 +1,13 @@
 package juliano.pagetrack.frontend;
 
 import juliano.pagetrack.common.domain.Contact;
+import juliano.pagetrack.common.domain.ContactView;
 import juliano.pagetrack.common.domain.PageAccess;
 import juliano.pagetrack.frontend.service.FrontendRESTService;
 import juliano.pagetrack.frontend.util.CookieHelper;
 
 import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/pagetrack")
 public class FrontendRESTController {
 
 	private static final Logger logger = LoggerFactory.getLogger(FrontendRESTController.class);
@@ -34,18 +36,19 @@ public class FrontendRESTController {
 	private FrontendRESTService rest;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact")
-	public @ResponseBody String findContacts() {
+	public @ResponseBody List<ContactView> findContacts() {
 		logger.info("findContacts invoked");
-		String text = "";
+		List<ContactView> views = new ArrayList<ContactView>();
 		List<Contact> contacts = this.rest.findContacts();
 		if ((contacts != null) && (!contacts.isEmpty())) {
 			logger.info("findContacts: contacts=" + contacts.size());
 			for (Contact c : contacts) {
-				text += "<a href=\"/api/v1/contact/" + c.getUserId() + "/pageaccess\">" + c.getEmail() + "</a><br>";
+				List<PageAccess> pages = this.rest.findPageAccessByUserId(c.getUserId());
+				views.add(new ContactView(c.getUserId(), c.getEmail(), pages));
 			}
 		}
-		logger.info("findContacts: text=" + text);
-		return text;
+		logger.info("findContacts: done");
+		return views;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/contact/{userid}/pageaccess")
