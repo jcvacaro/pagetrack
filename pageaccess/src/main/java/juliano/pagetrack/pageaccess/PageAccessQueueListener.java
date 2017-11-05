@@ -24,7 +24,11 @@ public class PageAccessQueueListener {
 	@RabbitListener(queues = "pageaccess")
 	public void processMessage(@Payload PageAccess pageaccess) {
 		logger.info("processMessage invoked: userId=" + pageaccess.getUserId());
-		repository.save(pageaccess);
+		try {
+			repository.save(pageaccess);
+		} catch (RuntimeException e) {
+			logger.error("processMessage failed", e);
+		}
 	}
 
 }

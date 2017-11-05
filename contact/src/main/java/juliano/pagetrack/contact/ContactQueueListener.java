@@ -24,7 +24,11 @@ public class ContactQueueListener {
 	@RabbitListener(queues = "contact")
 	public void processMessage(@Payload Contact contact) {
 		logger.info("processMessage invoked: userId=" + contact.getUserId());
-		repository.save(contact);
+		try {
+			repository.save(contact);
+		} catch (RuntimeException e) {
+			logger.error("processMessage failed", e);
+		}
 	}
 
 }
