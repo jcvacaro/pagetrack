@@ -81,12 +81,16 @@ var header = {
 addContact(header, tbody);
 
 // add contacts
-var contacts = $.ajax({type: "GET", url: "api/v1/pagetrack/contact", async: false}).responseJSON;
-contacts.forEach(function(contact){
-	addContact(contact, tbody);
+$.ajax({
+	type: "GET", 
+	url: "api/v1/pagetrack/contact",
+	success: function(contacts){
+		contacts.forEach(function(contact){
+			addContact(contact, tbody);
+		});
+		div.appendChild(table);
+	}
 });
-
-div.appendChild(table);
 </script>
 
 </body>
